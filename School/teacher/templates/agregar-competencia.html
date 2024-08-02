@@ -1,0 +1,43 @@
+{% extends 'base-teacher.html' %}
+
+{% block title %}Notas{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/administrador/add-student.css' %}">
+{% endblock %}
+
+{% block notas_active %}active{% endblock %}
+
+{% block notas_icon %}
+<img src="{% static 'icon/notas-selected.png' %}" alt="notas">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Agregar Competencia</h1>
+    <br>
+    <br>
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-container">
+                <label for="id_nombre">Nombre de la competencia:</label>
+                <input type="text" id="id_nombre" name="nombre" class="form-control" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-container">
+                <label for="id_curso">Curso:</label>
+            <select id="id_curso" name="curso" class="form-control" required>
+                <option value="">Selecciona un curso</option>
+                {% for curso in cursos %}
+                    <option value="{{ curso.idCurso }}">{{ curso.nombre }}</option>
+                {% endfor %}
+            </select>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
+{% endblock %}

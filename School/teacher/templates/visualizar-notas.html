@@ -1,0 +1,54 @@
+{% extends 'base-teacher.html' %}
+
+{% block title %}Notas{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/teacher/agregar-notas.css' %}">
+{% endblock %}
+
+{% block notas_active %}active{% endblock %}
+
+{% block notas_icon %}
+<img src="{% static 'icon/notas-selected.png' %}" alt="notas">
+{% endblock %}
+
+{% block content %}
+<div class="container-xd">
+    <div class="header">
+        <h1>Notas de {{curso}}</h1>
+        <button onclick="window.location.href='{% url 'agregar_competencia' %}'">Agregar Competencia</button>
+    </div>
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Estudiante</th>
+                    {%if total_competencias != 0%}
+                    {% for competencia in competencias %}
+                        <th>{{ competencia.nombre }}</th>
+                    {% endfor %}
+                    {%else%}
+                    <th>No tienes competencias, puedes agregar las competencias necesarias</th>
+                    {%endif%}
+                </tr>
+            </thead>
+            <tbody>
+                {% for dato in datos_notas %}
+                <tr>
+                    <td><a href="{% url 'editar_notas_estudiante' curso.idCurso dato.estudiante.idEstudiantes %}">{{ dato.estudiante.idUsuario.nombre }} {{ dato.estudiante.idUsuario.apellido }}</a></td>
+                    
+
+                    {%if total_competencias != 0%}
+                    {% for nota in dato.notas %}
+                        <td>{{ nota }}</td>
+                    {% endfor %}
+                    {%else%}
+                    <td>-</td>
+                    {%endif%}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

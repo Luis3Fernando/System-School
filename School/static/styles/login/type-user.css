@@ -1,0 +1,138 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #F1F7FB;
+}
+
+.site-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 100px;
+    color: white;
+    padding: 30px 30px;
+    align-items: center;
+    height: 10%;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.site-header .logo a {
+    color: #00448D;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo > img{
+    width: 30px;
+    height: 30px;
+}
+
+.div_login{
+    display: flex;
+    align-items: center;
+}
+.div_login button{
+    width: 130px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: #00448D;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.div_login button:hover {
+    transform: scale(1.1); 
+}
+main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.card-main{
+    width: 1000px;
+    height: 550px;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: rgba(27, 31, 35, 0.04) 0px 1px 0px, rgba(255, 255, 255, 0.25) 0px 1px 0px inset;
+}
+
+.card-main h2{
+    font-size: 30px;
+    color: #00448D;
+}
+
+.card-main button{
+    width: 130px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: #00448D;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    font-size: 16px;
+}
+
+.card-main button:hover {
+    transform: scale(1.1); 
+}
+
+.options{
+    display: flex;
+}
+
+.card {
+    border: 2px solid #949494;
+    padding: 40px;
+    margin: 20px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+    position: relative;
+}
+
+.card h3{
+    font-size: 20px;
+    margin-top: 20px;
+}
+
+.img-reference {
+    width: 150px;
+    border-radius: 75px;
+    border: 2px solid #949494;
+}
+
+.card.selected {
+    border-color: #00448D;
+}
+
+.card.selected .check {
+    display: block;
+}
+
+.check{
+    display: none;
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top:10px;
+    right: 10px;
+}

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tipo de usuario</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/login/type-user.css' %}" />
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo">
+            <img src={% static 'icon/gorro-de-graduacion.png' %} alt="icono">
+            <a href="#">I.E. ""</a>
+        </div>
+        <div class="div_login">
+            <button onclick="window.location.href='{% url 'login' %}'">
+                Atras
+            </button>
+        </div>
+    </header>
+    <main>
+        <div class="card-main">
+            <h2>Registrarse como:</h2>
+            <div class="options">
+                <div class="card" id="admin">
+                    <img class="img-reference" src="{% static 'img/admin.jpg' %}" alt="Admin" />
+                    <h3>Admin</h3>
+                    <img class="check" src="{% static 'icon/caja.png' %}" alt="check" />
+                </div>
+                <div class="card" id="student">
+                    <img class="img-reference" src="{% static 'img/student.jpg' %}" alt="Estudiante" />
+                    <h3>Estudiante</h3>
+                    <img class="check" src="{% static 'icon/caja.png' %}" alt="check" />
+                </div>
+                <div class="card" id="teacher">
+                    <img class="img-reference" src="{% static 'img/teacher.jpg' %}" alt="Profesor" />
+                    <h3>Profesor</h3>
+                    <img class="check" src="{% static 'icon/caja.png' %}" alt="check" />
+                </div>
+            </div>
+            <button id="next-button">Siguiente</button>
+        </div>
+    </main>
+
+    <script>
+        const cards = document.querySelectorAll(".card");
+        let selectedUserType = null;
+
+        cards.forEach((card) => {
+            card.addEventListener("click", () => {
+                cards.forEach((c) => c.classList.remove("selected"));
+                card.classList.add("selected");
+                selectedUserType = card.id;
+            });
+        });
+
+        document.getElementById("next-button").addEventListener("click", () => {
+            if (selectedUserType) {
+                window.location.href = `{% url 'form-generic' %}?user_type=${selectedUserType}`;
+            } else {
+                alert("Por favor, seleccione un tipo de usuario.");
+            }
+        });
+    </script>
+</body>
+</html>

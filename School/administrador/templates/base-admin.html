@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <title>{% block title %}Generic{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles/generic.css' %}" />
+    {% block extra_css %}{% endblock %}
+  </head>
+  <body>
+    <div class="container-main">
+      <aside class="nav-container">
+        <img src="{% static 'icon/gorro-de-graduacion.png'%}" alt="" />
+        <h1>Institución Educativa</h1>
+        <div class="content-nav">
+          <span>Menu</span>
+          <nav>
+            <ul>
+              <li class="{% block home_active %}{% endblock %}">
+                <a href="{% url 'administrador' %}">
+                  {% block home_icon %}
+                  <img
+                    src="{% static 'icon/home-disabled.png' %}"
+                    alt="Inicio"
+                  />
+                  {% endblock %} Inicio
+                </a>
+              </li>
+
+              <li class="{% block cursos_active %}{% endblock %}">
+                <a href="{% url 'administrador' %}cursos/">
+                  {% block cursos_icon %}
+                  <img
+                    src="{% static 'icon/cursos-disabled.png' %}"
+                    alt="cursos"
+                  />
+                  {% endblock %} Cursos
+                </a>
+              </li>
+
+              <li class="{% block students_active %}{% endblock %}">
+                <a href="{% url 'administrador' %}estudiantes/">
+                  {% block students_icon %}
+                  <img
+                    src="{% static 'icon/student-disabled.png' %}"
+                    alt="student"
+                  />
+                  {% endblock %} Estudiantes
+                </a>
+              </li>
+
+              <li class="{% block teacher_active %}{% endblock %}">
+                <a href="{% url 'administrador' %}profesores/">
+                  {% block teacher_icon %}
+                  <img
+                    src="{% static 'icon/teacher-disabled.png' %}"
+                    alt="teacher"
+                  />
+                  {% endblock %} Profesores
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+
+        <div class="content-nav">
+          <span>Cuenta</span>
+          <nav>
+            <ul>
+              <li class="{% block user_active %}{% endblock %}">
+                <a href="{% url 'administrador' %}perfil/">
+                  {% block profile_icon %}
+                  <img
+                    src="{% static 'icon/usuario-disabled.png' %}"
+                    alt="Perfil"
+                  />
+                  {% endblock %} Perfil
+                </a>
+              </li>
+
+              <li>
+                <a href="{% url 'login' %}">
+                  <img src="{% static 'icon/salida.png' %}" alt="" />Cerrar
+                  sesión</a
+                >
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
+      <main>{% block content %} {% endblock %}</main>
+    </div>
+    {% block extra_js %}
+    
+    {% endblock %}
+  </body>
+</html>

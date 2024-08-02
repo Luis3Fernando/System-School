@@ -1,0 +1,74 @@
+{% extends 'base-teacher.html' %}
+
+{% block title %}Perfil{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/teacher/perfil.css' %}">
+{% endblock %}
+
+{% block user_active %}active{% endblock %}
+
+{% block profile_icon %}
+<img src="{% static 'icon/usuario-selected.png' %}" alt="Usuario">
+{% endblock %}
+
+{% block content %}
+<div class="header-perfil">
+    <div class="header-perfil-left">
+        <img src="{%static 'img/teacher.jpg'%}" alt="perfil">
+        <h1>{{profesor.idUsuario.nombre}}</h1>
+        <br>
+        <p>Tipo: Profesor</p>
+    </div>
+    <div class="header-perfil-right">
+        <span>Informacion personal</span>
+        <div class="row">
+            <div>
+                <h3>Apellidos</h3>
+                <p>{{profesor.idUsuario.apellido}}</p>
+            </div>
+            <div>
+                <h3>Nacimiento</h3>
+                <p>{{profesor.idUsuario.fecha_nacimiento}}</p>
+            </div>
+            <div>
+                <h3>DNI</h3>
+                <p>{{profesor.idUsuario.dni}}</p>
+            </div>
+        </div>
+        <span>Informacion de contacto</span>
+        <div class="row">
+            <div>
+                <h3>Celular</h3>
+                <p>{{profesor.idUsuario.celular}}</p>
+            </div>
+            <div>
+                <h3>Direccion</h3>
+                <p>{{profesor.idUsuario.direccion}}</p>
+            </div>
+            <div>
+                <h3>Correo</h3>
+                <p>{{profesor.idUsuario.email}}</p>
+            </div>
+        </div>
+        <span>Informacion adicional</span>
+        <div class="row">
+            <div>
+                <h3>Especialidad</h3>
+                <p>{{profesor.especialidad}}</p>
+            </div>
+            <div>
+                <h3>Grado y Seccion</h3>
+                <p>{{profesor.grado.grado}} - Seccion {{profesor.grado.seccion}}</p>
+            </div>
+            <a href="{% url 'actualizar-profesor' profesor_id=profesor.idUsuario.dni %}" class="boton-editar">
+                Editar <img src="{% static 'icon/lapiz.png' %}" alt="img">
+            </a>  
+        </div>
+    </div>
+</div>
+
+<div class="footer-perfil">
+    <h3>Proyectos y actividades</h3>
+</div>
+{% endblock %}

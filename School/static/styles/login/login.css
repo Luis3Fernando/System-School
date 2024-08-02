@@ -1,0 +1,153 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Basic styles for the body */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+.site-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 100px;
+    color: white;
+    padding: 30px 30px;
+    align-items: center;
+    height: 10%;
+}
+
+.logo{
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.site-header .logo a {
+    color: #00448D;
+    text-decoration: none;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.logo > img{
+    width: 30px;
+    height: 30px;
+}
+
+.div_login{
+    display: flex;
+    align-items: center;
+    width: 400px;
+    justify-content: space-between;
+}
+
+.nav{
+    margin-right: 10px;
+}
+
+.nav ul {
+    list-style: none;
+    display: flex;
+    gap: 15px;
+}
+
+.nav ul li a {
+    color: #949494;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav ul li a:hover {
+    color: #00448D;
+}
+
+.div_login button{
+    width: 130px;
+    height: 30px;
+    border: none;
+    border-radius: 10px;
+    background-color: #00448D;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.div_login button:hover {
+    transform: scale(1.1); 
+}
+/* Main content styles */
+.site-main {
+    display: flex;
+    height: 90%;
+}
+
+.left{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+}
+
+.left p {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.left h1{
+    color: #00448D;
+    margin-bottom: 10px;
+    font-size: 50px;
+}
+
+.left h2{
+    color: #0E2D58;
+    margin-bottom: 10px;
+    font-size: 40px;
+}
+
+.right{
+    width: 50%;
+    position: relative;
+}
+
+.right img{
+    width: 270px;
+    height: 320px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+#img1{
+    position: absolute;
+    top: 10%;
+    right: 10%;
+}
+
+#img2{
+    position: absolute;
+    top: 200px;
+    right: 60%;
+}
+
+.text-p{
+    position: absolute;
+    top: 250px;
+    right: 40%;
+    background-color: #00448D;
+    width: 200px;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.text-p p{
+    color: #F1F7FB;
+}

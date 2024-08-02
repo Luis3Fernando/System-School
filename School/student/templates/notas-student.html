@@ -1,0 +1,51 @@
+{% extends 'base-student.html' %}
+
+{% block title %}Notas{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/student/notas.css' %}">
+{% endblock %}
+
+{% block notas_active %}active{% endblock %}
+
+{% block notas_icon %}
+<img src="{% static 'icon/notas-selected.png' %}" alt="notas">
+{% endblock %}
+
+{% block content %}
+<div class="container-notas">
+    <h1>Notas del Estudiante</h1>
+    <button id="imprimir-pdf">Imprimir PDF</button>
+    <br><br>
+    {% for curso, notas in notas_por_curso.items %}
+        <h3 class="title-course">{{ curso }}</h3>
+        <div class="table-container">
+            <table>
+                <thead> 
+                    <tr>
+                        <th>Competencias</th>
+                        {% for nota in notas %}
+                            <th>{{ nota.idCompetencia.nombre }}</th>
+                        {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Calificación</td>
+                        {% for nota in notas %}
+                            <td>{{ nota.nota }}</td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <br><br><br>
+    {% endfor %}
+</div>
+
+<script>
+document.getElementById('imprimir-pdf').addEventListener('click', function() {
+    window.open("{% url 'generate_pdf' %}", '_blank');
+});
+</script>
+{% endblock %}

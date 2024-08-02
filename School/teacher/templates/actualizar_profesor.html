@@ -1,0 +1,67 @@
+{% extends 'base-teacher.html' %}
+
+{% block title %}Perfil{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/administrador/add-student.css' %}">
+{% endblock %}
+
+{% block user_active %}active{% endblock %}
+
+{% block profile_icon %}
+<img src="{% static 'icon/usuario-selected.png' %}" alt="Usuario">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Actualizar Profesor</h2>
+    <br><br>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-container">
+                <label for="apellido">Apellido</label>
+                <input type="text" name="apellido" value="{{ profesor.idUsuario.apellido }}" id="apellido" required>
+            </div>
+            <div class="input-container">
+                <label for="nombre">Nombre</label>
+                <input type="text" name="nombre" value="{{ profesor.idUsuario.nombre }}" id="nombre" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-container">
+                <label for="email">Email</label>
+                <input type="email" name="email" value="{{ profesor.idUsuario.email }}" id="email" required>
+            </div>
+            <div class="input-container">
+                <label for="direccion">Dirección</label>
+                <input type="text" name="direccion" value="{{ profesor.idUsuario.direccion }}" id="direccion">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-container">
+                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                <input type="date" name="fecha_nacimiento" value="{{ profesor.idUsuario.fecha_nacimiento }}" id="fecha_nacimiento" required>
+            </div>
+            <div class="input-container">
+                <label for="celular">Celular</label>
+                <input type="text" name="celular" value="{{ profesor.idUsuario.celular }}" id="celular">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-container">
+                <label for="especialidad">Especialidad</label>
+                <input type="text" name="especialidad" value="{{ profesor.especialidad }}" id="especialidad">
+            </div>
+            <div class="input-container">
+                <label for="img">Imagen de Perfil</label>
+                <input type="file" name="img" id="img" value="{{profesor.img}}">
+            </div>
+        </div>
+        
+        <button type="submit" name="actualizar_profesor">Actualizar</button>
+    </form>
+</div>
+{% endblock %}

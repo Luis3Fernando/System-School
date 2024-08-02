@@ -1,0 +1,30 @@
+{% extends 'base-student.html' %}
+
+{% block title %}Cursos{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/teacher/notas.css' %}">
+{% endblock %}
+
+{% block cursos_active %}active{% endblock %}
+
+{% block cursos_icon %}
+<img src="{% static 'icon/cursos-selected.png' %}" alt="cursos">
+{% endblock %}
+
+{% block content %}
+<div class="container-notas">
+    <h1>Cursos</h1>
+    <div class="content-cursos">
+        {% for curso in cursos %}
+            <button class="card-curso">
+                <img src="{% static 'icon/'|add:curso.nombre|lower|add:'.png' %}" alt="{{ curso.nombre }}">
+                <div>
+                    <h3>{{ curso.nombre }}</h3>
+                    <p>Notas pendientes</p>
+                </div>
+            </button>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

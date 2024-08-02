@@ -1,0 +1,91 @@
+{% extends 'base-admin.html' %}
+
+{% block title %}Estudiantes{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/administrador/add-student.css' %}">
+{% endblock %}
+
+{% block students_active %}active{% endblock %}
+
+{% block students_icon %}
+<img src="{% static 'icon/student-selected.png' %}" alt="student">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-container">
+                <label for="dni_buscar">Ingresa un Número de DNI para buscar</label>
+                <input type="text" id="dni_buscar" name="dni_buscar" required>
+            </div>
+            <div class="input-container">
+                <label>&nbsp;</label>
+                <button type="submit" name="buscar_dni">Buscar</button>
+            </div>
+        </div>
+    </form>
+    
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-container">
+                <label for="apellido">Apellidos</label>
+                <input type="text" id="apellido" name="apellido" value="{{usuario.apellidoPaterno}} {{usuario.apellidoMaterno}}" required>
+            </div>
+            <div class="input-container">
+                <label for="nombre">Nombres</label>
+                <input type="text" id="nombre" name="nombre" value="{{usuario.nombres}}"  required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-container">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="input-container">
+                <label for="direccion">Dirección</label>
+                <input type="text" id="direccion" name="direccion">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-container">
+                <label for="password">Contraseña</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="input-container">
+                <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+                <input type="date" id="fecha_nacimiento" name="fecha_nacimiento">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-container">
+                <label for="celular">Celular</label>
+                <input type="text" id="celular" name="celular">
+            </div>
+            <div class="input-container">
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" name="dni"value="{{usuario.numeroDocumento}}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-container">
+                <label for="apoderado">Apoderado</label>
+                <input type="text" id="apoderado" name="apoderado">
+            </div>
+            <div class="input-container">
+                <label for="grado">Grado</label>
+                <select id="grado" name="grado">
+                    <option value="">Selecciona un grado</option>
+                    {% for grado in grados %}
+                        <option value="{{ grado.idGrado }}">{{ grado.grado }} - {{ grado.seccion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type="submit" name="agregar_estudiante">Agregar Estudiante</button>
+    </form>
+</div>
+{% endblock %}

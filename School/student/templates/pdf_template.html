@@ -1,0 +1,71 @@
+<p style="text-align: center;"><strong>INFORME DE PROGRESO DEL ESTUDIANTE - 2024</strong></p>
+<p><img style="float: left;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Escudo_nacional_del_Per%C3%BA.png/768px-Escudo_nacional_del_Per%C3%BA.png" alt="Archivo:Escudo nacional del Per&uacute;.png - Wikipedia, la enciclopedia libre" width="10%" height="10%" /><img style="float: right;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Escudo_nacional_del_Per%C3%BA.png/768px-Escudo_nacional_del_Per%C3%BA.png" alt="Archivo:Escudo nacional del Per&uacute;.png - Wikipedia, la enciclopedia libre" width="10%" height="10%" /></p>
+<table style="height: 198px; width: 75%; border-collapse: collapse; background-color: 949494;" border="1">
+<tbody>
+<tr style="height: 18px;">
+<td style="width: 27.7778%; height: 18px; background-color: #949494;">GRE:</td>
+<td style="width: 22.9166%; height: 18px;">&nbsp;</td>
+<td style="width: 24.3056%; height: 18px; background-color: #949494;">UGEL:</td>
+<td style="width: 25%; height: 18px;">&nbsp;</td>
+</tr>
+<tr style="height: 36px;">
+<td style="width: 27.7778%; height: 36px; background-color: #949494;">Nivel:</td>
+<td style="width: 22.9166%; height: 36px;">&nbsp;</td>
+<td style="width: 24.3056%; height: 36px; background-color: #949494;">Codigo modular:</td>
+<td style="width: 25%; height: 36px;">&nbsp;</td>
+</tr>
+<tr style="height: 36px;">
+<td style="width: 27.7778%; height: 36px; background-color: #949494;">Instituci&oacute;n Educativa:</td>
+<td style="width: 22.9166%; height: 36px;">&nbsp;</td>
+<td style="width: 24.3056%; height: 36px;">&nbsp;</td>
+<td style="width: 25%; height: 36px;">&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 27.7778%; height: 18px; background-color: #949494;">Grado:</td>
+<td style="width: 22.9166%; height: 18px;">&nbsp;</td>
+<td style="width: 24.3056%; height: 18px; background-color: #949494;">Secci&oacute;n:</td>
+<td style="width: 25%; height: 18px;">&nbsp;</td>
+</tr>
+<tr style="height: 54px;">
+<td style="width: 27.7778%; height: 54px; background-color: #949494;">Apellidos y nombres del estudiante:</td>
+<td style="width: 22.9166%; height: 54px;">&nbsp;</td>
+<td style="width: 24.3056%; height: 54px;">&nbsp;</td>
+<td style="width: 25%; height: 54px;">&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 27.7778%; height: 18px; background-color: #949494;">DNI del estudiante:</td>
+<td style="width: 22.9166%; height: 18px;">&nbsp;</td>
+<td style="width: 24.3056%; height: 18px;">&nbsp;</td>
+<td style="width: 25%; height: 18px;">&nbsp;</td>
+</tr>
+<tr style="height: 18px;">
+<td style="width: 27.7778%; height: 18px; background-color: #949494;">Fecha de nacimiento:</td>
+<td style="width: 22.9166%; height: 18px;">&nbsp;</td>
+<td style="width: 24.3056%; height: 18px;">&nbsp;</td>
+<td style="width: 25%; height: 18px;">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+{% for curso, notas in notas_por_curso.items %}
+<h3 class="title-course">{{ curso }}</h3>
+<div class="table-container">
+    <table>
+        <thead> 
+            <tr>
+                <th>Competencias</th>
+                {% for nota in notas %}
+                    <th>{{ nota.idCompetencia.nombre }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Calificación</td>
+                {% for nota in notas %}
+                    <td>{{ nota.nota }}</td>
+                {% endfor %}
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endfor %}

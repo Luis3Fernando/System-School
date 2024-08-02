@@ -1,0 +1,34 @@
+{% extends 'base-teacher.html' %}
+
+{% block title %}Notas{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/teacher/notas.css' %}">
+{% endblock %}
+
+{% block notas_active %}active{% endblock %}
+
+{% block notas_icon %}
+<img src="{% static 'icon/notas-selected.png' %}" alt="notas">
+{% endblock %}
+
+{% block content %}
+<div class="container-notas">
+    <h1>Ingreso Notas</h1>
+    <p>Seleccione un curso para ingresar o revisar las notas de los estudiantes</p>
+    <div class="content-cursos">
+        {% for curso in cursos %}
+        <a href="{% url 'visualizar_notas' curso.idCurso %}">
+            <button class="card-curso">
+                <img src="{% static 'icon/'|add:curso.nombre|lower|add:'.png' %}" alt="{{ curso.nombre }}">
+                <div>
+                    <h3>{{ curso.nombre }}</h3>
+                    <p>Notas pendientes</p>
+                </div>
+            </button>
+        </a>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

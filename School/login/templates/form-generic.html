@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% load static %}
+    <link
+      rel="stylesheet"
+      href="{% static 'styles/login/form-generic.css' %}"
+    />
+    <title>Form</title>
+  </head>
+  <body>
+    <div class="container">
+      <main>
+        <img class="logo" src="{% static 'icon/gorro-de-graduacion.png' %}" alt="logo" />
+        <form method="POST" action="">
+          {% csrf_token %}
+          <h1>Iniciar Sesión</h1>
+          <p>Inicia sesión con tu cuenta asignada por la institución</p>
+          <div class="input-content">
+              <img src="{% static 'icon/usuario-form.png'%}" alt="" />
+              <input type="text" name="dni" placeholder="DNI" required>
+          </div>
+          <div class="input-content">
+              <img src="{% static 'icon/cerrar.png'%}" alt="" />
+              <input type="password" name="password" placeholder="Contraseña" required>
+          </div>
+          <button type="submit">Ingresar</button>
+          {% if error_message %}
+              <p style="color: red;">{{ error_message }}</p>
+          {% endif %}
+      </form>
+      </main>
+      <aside>
+        <div></div>
+        <img src="{% static 'img/student-form.png' %}" alt="imagen" />
+      </aside>
+    </div>
+  </body>
+</html>

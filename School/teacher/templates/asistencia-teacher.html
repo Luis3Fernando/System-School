@@ -1,0 +1,203 @@
+{% extends 'base-teacher.html' %}
+
+{% block title %}Asistencia{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/teacher/asistencia.css' %}">
+{% endblock %}
+
+{% block asistencia_active %}active{% endblock %}
+
+{% block asistencia_icon %}
+    <img src="{% static 'icon/asistencia-selected.png' %}" alt="asistencia">
+{% endblock %}
+
+{% block content %}
+<div class="container-asistencia">
+    <div class="left-assitencia">
+        <div class="left-header">
+            <h1>Lista de estudiantes</h1>
+            <div class="search-bar">
+                <img src="{% static 'icon/busqueda.png'%}" alt="texto">
+                <input type="text" id="search" placeholder="Buscar estudiantes">
+            </div>
+        </div>
+        <div>
+            <div class="header-form">
+                <span>{{fecha}}</span>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Asistencia</th>
+                        </tr>
+                    </thead>
+                    <tbody id="students-attendance">
+                        {% for student in students %}
+                            <tr class="student-row" data-student-id="{{ student.idEstudiantes }}">
+                                <td class="student-name clickable" data-student-id="{{ student.idEstudiantes }}">{{ student.idUsuario.nombre }} {{ student.idUsuario.apellido }}</td>
+                                <td>
+                                    {% with latest_asistencia=student.asistencias.last %}
+                                        <input type="hidden" name="status_{{ student.id }}" value="{{ latest_asistencia.estado|default:'P' }}">
+                                        <div class="circle P {% if latest_asistencia.estado == 'P' %}selected{% endif %}" data-status="P">P</div>
+                                        <div class="circle T {% if latest_asistencia.estado == 'T' %}selected{% endif %}" data-status="T">T</div>
+                                        <div class="circle F {% if latest_asistencia.estado == 'F' %}selected{% endif %}" data-status="F">F</div>
+                                        <div class="circle J {% if latest_asistencia.estado == 'J' %}selected{% endif %}" data-status="J">J</div>
+                                    {% endwith %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="right-assitencia">
+        <div class="header-right">
+            <h1>Notificaciones</h1>
+            <div class="scroll-card">
+                {% for mensaje in mensajes_justificacion %}
+                <div class="card-not">
+                    <div class="icon_not">
+                        <img src="{% static 'icon/advertencia.png'%}" alt="">
+                    </div>
+                    <div class="detals_not">
+                        <h3>{{ mensaje.idAsistencia.idstudent.idUsuario.nombre }} {{ mensaje.idAsistencia.idstudent.idUsuario.apellido }}</h3>
+                        <p>{{ mensaje.mensaje }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+        <div class="footer-right">
+            <h1>Leyenda</h1>
+            <div>
+                <div>
+                    <div class="c circleP">P</div>
+                    <p> = Presente</p>
+                </div>
+                <div>
+                    <div class="c circleT">T</div>
+                    <p> = Tardanza</p>
+                </div>
+                <div>
+                    <div class="c circleF">F</div>
+                    <p> = Falta</p>
+                </div>
+                <div>
+                    <div class="c circleJ">J</div>
+                    <p> = Justificado</p>
+                </div>                 
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Editar Asistencia de <span id="studentName"></span></h2>
+        <br><br>
+        <form id="attendanceForm">
+            <input type="hidden" id="studentId" name="student_id">
+            <label for="estado">Estado de Asistencia:</label>
+            <select id="estado" name="estado">
+                <option value="P">Presente</option>
+                <option value="T">Tardanza</option>
+                <option value="F">Falta</option>
+                <option value="J">Justificado</option>
+            </select>
+            <br><br>
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchInput = document.getElementById('search');
+        searchInput.addEventListener('keyup', function () {
+            const filter = searchInput.value.toLowerCase();
+            const rows = document.querySelectorAll('.student-row');
+            rows.forEach(row => {
+                const name = row.querySelector('.student-name').textContent.toLowerCase();
+                row.style.display = name.includes(filter) ? '' : 'none';
+            });
+        });
+
+        const modal = document.getElementById('myModal');
+        const span = document.querySelector('.close');
+        const studentNameElem = document.getElementById('studentName');
+        const studentIdInput = document.getElementById('studentId');
+        const estadoSelect = document.getElementById('estado');
+        const form = document.getElementById('attendanceForm');
+
+        document.querySelectorAll('.clickable').forEach(item => {
+            item.addEventListener('click', function() {
+                const studentId = this.getAttribute('data-student-id');
+                const studentName = this.textContent;
+                const currentStatus = this.parentElement.querySelector('input').value;
+
+                studentNameElem.textContent = studentName;
+                studentIdInput.value = studentId;
+                estadoSelect.value = currentStatus;
+
+                modal.style.display = "block";
+            });
+        });
+
+        span.addEventListener('click', function() {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const studentId = studentIdInput.value;
+            const estado = estadoSelect.value;
+            fetch(`/teacher/guardar_asistencia/${studentId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'  // Asegúrate de que el CSRF token esté disponible en tu plantilla
+                },
+                body: JSON.stringify({ estado: estado })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Actualizar el estado de asistencia en la tabla sin recargar la página
+                    const row = document.querySelector(`.student-row[data-student-id="${studentId}"]`);
+                    row.querySelector('input').value = estado;
+                    row.querySelectorAll('.circle').forEach(circle => {
+                        if (circle.getAttribute('data-status') === estado) {
+                            circle.classList.add('selected');
+                        } else {
+                            circle.classList.remove('selected');
+                        }
+                    });
+                    modal.style.display = "none";
+                } else {
+                    alert('Error al guardar la asistencia');
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        });
+    });
+</script>
+{% endblock %}

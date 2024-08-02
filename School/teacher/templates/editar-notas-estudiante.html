@@ -1,0 +1,52 @@
+{% extends 'base-teacher.html' %}
+
+{% block title %}Notas{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/teacher/agregar-notas.css' %}">
+{% endblock %}
+
+{% block notas_active %}active{% endblock %}
+
+{% block notas_icon %}
+<img src="{% static 'icon/notas-selected.png' %}" alt="notas">
+{% endblock %}
+
+{% block content %}
+<div class="container-xd">
+    <div class="header">
+        <h1>Notas de {{ estudiante.idUsuario.nombre }} {{ estudiante.idUsuario.apellido }}</h1>
+    </div>
+    <div class="container">
+        <form id="notas-form" method="POST">
+            {% csrf_token %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Competencia</th>
+                        <th>Nota</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for competencia in competencias %}
+                    <tr>
+                        <td>{{ competencia.nombre }}</td>
+                        <td>
+                            <select name="nota_{{ competencia.idCompetencias }}">
+                                <option value="" {% if notas|default_if_none:'' == '' %}selected{% endif %}>--</option>
+                                <option value="C" {% if notas|default_if_none:'' == 'C' %}selected{% endif %}>C</option>
+                                <option value="B" {% if notas|default_if_none:'' == 'B' %}selected{% endif %}>B</option>
+                                <option value="A" {% if notas|default_if_none:'' == 'A' %}selected{% endif %}>A</option>
+                                <option value="AD" {% if notas|default_if_none:'' == 'AD' %}selected{% endif %}>AD</option>
+                            </select>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <button type="submit">Guardar</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+    

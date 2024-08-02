@@ -1,0 +1,60 @@
+.container-notas {
+    background-color: white;
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    padding: 30px;
+}
+
+.container-notas>p {
+    margin-top: 10px;
+}
+
+.container-notas>div {
+    margin-top: 10px;
+    padding: 20px;
+}
+
+.card-curso {
+    width: 250px;
+    height: 120px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border: none;
+    outline: none;
+    background-color: #00448D;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.card-curso>img {
+    width: 60px;
+    height: 60px;
+}
+
+.card-curso>div {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.card-curso>div>h3 {
+    color: white;
+    margin-bottom: 10px;
+}
+
+.card-curso>div>p {
+    color: white;
+}
+
+.content-cursos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-height: 80vh;
+    overflow-y: auto;
+}

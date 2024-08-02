@@ -1,0 +1,65 @@
+{% extends 'base-admin.html' %}
+
+{% block title %}Profesores{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/administrador/profesores.css' %}">
+{% endblock %}
+
+{% block teacher_active %}active{% endblock %}
+
+{% block teacher_icon %}
+<img src="{% static 'icon/teacher-selected.png' %}" alt="teacher">
+{% endblock %}
+{% block content %}
+<div>
+    <div class="header_students">
+        <h1>
+            Profesores
+        </h1>
+        <div>
+            <button onclick="window.location.href='{% url 'agregar-profesor' %}'">Agregar</button>
+            <div class="busqueda">
+                <img src="{% static 'icon/busqueda.png' %}" alt="lupa">
+                <input type="text" id="searchInput" placeholder="Buscar">
+        </div>
+        </div>
+    </div>
+    <div class="grid-container" id="studentGrid">
+        {% for profesor in profesores %}
+            <div class="card" data-name="{{ profesor.idUsuario.nombre }}" data-guardian="{{ profesor.idUsuario.apellido }}" data-address="{{ student.address }}">
+                <img src="{{profesor.img.url}}" alt="">
+                <div>
+                    <h1>{{ profesor.idUsuario.nombre }} {{profesor.idUsuario.apellido}}</h1>
+                <p><strong>DNI: </strong>{{ profesor.idUsuario.dni }}</p>
+                <p><strong>Email: </strong>{{ profesor.idUsuario.email }}</p>
+                <p><strong>Celular: </strong>{{ profesor.idUsuario.celular }}</p>
+                <p><strong>Contraseña: </strong>{{ profesor.idUsuario.password }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %} 
+<script>
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        var searchQuery = this.value.toLowerCase();
+        var cards = document.querySelectorAll('.card');
+
+        cards.forEach(function(card) {
+            var name = card.getAttribute('data-name').toLowerCase();
+            var guardian = card.getAttribute('data-guardian').toLowerCase();
+            var address = card.getAttribute('data-address').toLowerCase();
+
+            if (name.includes(searchQuery) || guardian.includes(searchQuery) || address.includes(searchQuery)) {
+                card.style.visibility = 'visible';
+                card.style.display = 'block'; // Asegura que la tarjeta esté visible cuando coincida
+            } else {
+                card.style.visibility = 'hidden';
+            }
+        });
+    });
+</script>
+{% endblock %}

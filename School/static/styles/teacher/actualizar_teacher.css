@@ -1,0 +1,50 @@
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+}
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-bottom: 2px solid #ccc;
+}
+.form-group input:focus,
+.form-group select:focus {
+    border-bottom: 2px solid #007BFF;
+    outline: none;
+}
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+.row .form-group {
+    flex: 1;
+    margin-right: 10px;
+}
+.row .form-group:last-child {
+    margin-right: 0;
+}
+.form-group img {
+    max-width: 100px;
+    display: block;
+    margin-bottom: 10px;
+}
+button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+button:hover {
+    background-color: #0056b3;
+}

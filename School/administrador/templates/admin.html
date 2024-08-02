@@ -1,0 +1,86 @@
+{% extends 'base-admin.html' %}
+
+{% block title %}Admin{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/administrador/admin.css' %}">
+{% endblock %}
+
+{% block home_active %}active{% endblock %}
+
+{% block home_icon %}
+<img src="{% static 'icon/home-selected.png' %}" alt="admin">
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="header-main">
+        <div>
+            <p>{{fecha}}</p>
+            <h1>Buen dia {{administrador.idUsuario.nombre}}  {{administrador.idUsuario.apellido}}</h1>
+        </div>
+        <img src="{%static 'icon/vector-fondo.png'%}" alt="">
+    </div>
+    <div class="footer-container">
+        <div class="footer-horario">
+                <h2>Cursos</h2>
+                {% for course in cursos %}
+                    <div class="card">
+                        <h4 class="nombre-curso">{{ course.nombre }}</h4>
+                        <img src="{%static 'icon/cuaderno.png'%}" alt="">
+                    </div>
+                {% endfor %}
+        </div>
+        <div class="footer-details">
+            <div class="resume">
+                <div>
+                    <h1>{{total_profesores}}</h1>
+                    <p>Profesores</p>
+                </div>
+                <div>
+                    <h1>{{total_estudiantes}}</h1>
+                    <p>Estudiantes</p>
+                </div>
+                <div>
+                    <h1>{{total_cursos}}</h1>
+                    <p>Cursos</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button onclick="window.location.href='{% url 'agregar-administrador' %}'">
+                    <div>
+                        <img src="{% static "icon/teacher-color.png" %}" alt="">
+                    </div>
+                    <p>Agregar Administrador</p>
+                </button>
+                <button>
+                    <div>
+                        <img src="{% static "icon/student-color1.png" %}" alt="">
+                    </div>
+                    <p>Agregar Curso</p>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %} 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+
+        document.querySelectorAll('.check-circle').forEach(checkCircle => {
+            const time = checkCircle.dataset.time.split(':');
+            const hour = parseInt(time[0]);
+            const minute = parseInt(time[1]);
+
+            if (hour < currentHour || (hour === currentHour && minute <= currentMinute)) {
+                checkCircle.classList.remove('hidden');
+            }
+        });
+    });
+</script>
+{% endblock %}

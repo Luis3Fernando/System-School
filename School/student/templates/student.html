@@ -1,0 +1,88 @@
+{% extends 'base-student.html' %}
+
+{% block title %}Estudiante{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/teacher/teacher.css' %}">
+{% endblock %}
+
+{% block home_active %}active{% endblock %}
+
+{% block home_icon %}
+<img src="{% static 'icon/home-selected.png' %}" alt="student">
+{% endblock %}
+
+{% block content %}
+<div class="main-container">
+    <div class="header-main">
+        <div>
+            <p>{{fecha}}</p>
+            <h1>Buen dia Estudiante {{estudiante.idUsuario.nombre}}</h1>
+        </div>
+        <img src="{%static 'icon/vector-fondo.png'%}" alt="">
+    </div>
+    <div class="footer-container">
+        <div class="footer-horario">
+            <h2>Cursos</h2>
+            {% for course in cursos %}
+                <div class="card">
+                    <h4 class="nombre-curso">{{ course.nombre }}</h4>
+                    <img src="{%static 'icon/cuaderno.png'%}" alt="">
+                </div>
+            {% endfor %}
+        </div>
+        <div class="footer-details">
+            <div class="resume">
+                <div>
+                    <img src="{%static 'img/presente.png'%}" alt="">
+                    <h1>15</h1>
+                    <p>Promedio</p>
+                </div>
+                <div>
+                    <img src="{%static 'img/ausente.png'%}" alt="">
+                    <h1>{{total_cursos}}</h1>
+                    <p>Cursos</p>
+                </div>
+                <div>
+                    <img src="{%static 'img/justificado.jpg'%}" alt="">
+                    <h1>{{asistencia.estado}}</h1>
+                    <p>Asistencia</p>
+                </div>
+            </div>
+            <div class="botones">
+                <button>
+                    <div>
+                        <img src="{% static "icon/lista-color.png" %}" alt="">
+                    </div>
+                    <p>Asistencia</p>
+                </button>
+                <button>
+                    <div>
+                        <img src="{% static "icon/notas-color.png" %}" alt="">
+                    </div>
+                    <p>Notas</p>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block extra_js %} 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const now = new Date();
+        const currentHour = now.getHours();
+        const currentMinute = now.getMinutes();
+
+        document.querySelectorAll('.check-circle').forEach(checkCircle => {
+            const time = checkCircle.dataset.time.split(':');
+            const hour = parseInt(time[0]);
+            const minute = parseInt(time[1]);
+
+            if (hour < currentHour || (hour === currentHour && minute <= currentMinute)) {
+                checkCircle.classList.remove('hidden');
+            }
+        });
+    });
+</script>
+{% endblock %}

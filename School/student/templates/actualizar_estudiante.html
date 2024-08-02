@@ -1,0 +1,70 @@
+{% extends 'base-student.html' %}
+
+{% block title %}Perfil{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/administrador/add-student.css' %}">
+{% endblock %}
+
+{% block user_active %}active{% endblock %}
+
+{% block profile_icon %}
+<img src="{% static 'icon/usuario-selected.png' %}" alt="Usuario">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Actualizar Estudiante</h1>
+    <br><br>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-container">
+                <label for="apellido">Apellidos</label>
+                <input type="text" id="apellido" name="apellido" required value="{{ usuario.apellido }}">
+            </div>
+            <div class="input-container">
+                <label for="nombre">Nombres</label>
+                <input type="text" id="nombre" name="nombre" required value="{{ usuario.nombre }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-container">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required value="{{ usuario.email }}">
+            </div>
+            <div class="input-container">
+                <label for="direccion">Dirección</label>
+                <input type="text" id="direccion" name="direccion" value="{{ usuario.direccion }}">
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-container">
+                <label for="celular">Celular</label>
+                <input type="text" id="celular" name="celular" value="{{ usuario.celular }}">
+            </div>
+            <div class="input-container">
+                <label for="dni">DNI</label>
+                <input type="text" id="dni" name="dni"  value="{{ usuario.dni }}" readonly>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="input-container">
+                <label for="apoderado">Apoderado</label>
+                <input type="text" id="apoderado" name="apoderado" value="{{ estudiante.apoderado }}">
+            </div>
+            <div class="input-container">
+                <label for="grado">Grado</label>
+                <select id="grado" name="grado">
+                    <option value="">Selecciona un grado</option>
+                    {% for grado in grados %}
+                        <option value="{{ grado.idGrado }}" {% if grado == estudiante.grado %}selected{% endif %}>{{ grado.grado }} - {{ grado.seccion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <button type="submit" name="actualizar_estudiante">Actualizar</button>
+    </form>
+</div>
+{% endblock %}
