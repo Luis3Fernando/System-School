@@ -7,25 +7,61 @@ from .utils import create_pdf
 from django.template.loader import get_template
 from django.conf import settings
 import os
+from django.contrib import messages
+from django.utils import timezone
+
 
 @login_required
 def Student(request):
     try:
         usuario = Usuario.objects.get(dni=request.user)
         estudiante = Estudiante.objects.get(idUsuario=usuario)
+        profesor = Profesore.objects.get(grado=estudiante.grado)
     except Estudiante.DoesNotExist:
         return HttpResponseForbidden("No tienes permiso para ver esta página.")
     cursos = Curso.objects.all()
     total_cursos = cursos.count()
-    asistencia = Asistencia.objects.get(idstudent=estudiante)
+    hoy = timezone.now().date()
+    asistencia = Asistencia.objects.get(idstudent=estudiante,fecha=hoy )
     context = {
         "estudiante": estudiante,
         "fecha": fecha_actual(),
         "cursos": cursos,
         "total_cursos": total_cursos,
-        "asistencia": asistencia
+        "asistencia": asistencia,
+        "profesor": profesor
     }
     return render(request, 'student.html', context)
+
+@login_required
+def EnviarMensaje(request):
+    if request.method == 'POST':
+        mensaje_texto = request.POST.get('apellido')
+
+        if mensaje_texto:
+            try:
+                usuario = Usuario.objects.get(user=request.user)
+                estudiante = Estudiante.objects.get(idUsuario=usuario)
+                
+                hoy = timezone.now().date()
+                asistencia = Asistencia.objects.get(idstudent=estudiante, fecha=hoy)
+                
+                mensaje = MensajesJustificacion(
+                    mensaje=mensaje_texto,
+                    idAsistencia=asistencia
+                )
+                mensaje.save()
+                messages.success(request, 'Mensaje enviado exitosamente.')
+                return redirect('student') 
+            
+            except Estudiante.DoesNotExist:
+                messages.error(request, 'No tienes permiso para ver esta página.')
+            except Asistencia.DoesNotExist:
+                messages.error(request, 'No se encontró asistencia para hoy.')
+        else:
+            messages.error(request, 'El mensaje es requerido.')
+
+    return render(request, "enviar-mensaje.html")
 
 def Cursos(request):
     cursos = Curso.objects.all()

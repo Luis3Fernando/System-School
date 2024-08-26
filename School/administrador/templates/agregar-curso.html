@@ -1,0 +1,30 @@
+{% extends 'base-admin.html' %}
+
+{% block title %}Cursos{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/administrador/add-student.css' %}">
+{% endblock %}
+
+{% block cursos_active %}active{% endblock %}
+
+{% block cursos_icon %}
+<img src="{% static 'icon/cursos-selected.png' %}" alt="cursos">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Crear un nuevo Curso</h1>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-container">
+                <label for="apellido">Nombre del Curso</label>
+                <input type="text" id="apellido" name="apellido" value="{{usuario.apellidoPaterno}} {{usuario.apellidoMaterno}}" required>
+            </div>
+        </div>
+      
+        <button type="submit" name="agregar_estudiante">Agregar</button>
+    </form>
+</div>
+{% endblock %}

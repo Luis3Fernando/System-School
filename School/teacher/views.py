@@ -9,18 +9,27 @@ from administrador.utils import fecha_actual
 import json
 
 @login_required
-def Teacher(request):    
+def Teacher(request):
+    hoy = date.today()
+    
     try:
-        usuario = Usuario.objects.get(dni=request.user)
+        usuario = Usuario.objects.get(user=request.user)
         profesor = Profesore.objects.get(idUsuario=usuario)
     except Profesore.DoesNotExist:
         return HttpResponseForbidden("No tienes permiso para ver esta página.")
     
-    cursos = Curso.objects.all()
-    hoy = date.today()
-
-    # Obtener todas las asistencias de hoy
+    estudiantes = Estudiante.objects.filter(grado=profesor.grado)
+    
+    for estudiante in estudiantes:
+        Asistencia.objects.get_or_create(
+            fecha=hoy,
+            idstudent=estudiante,
+            defaults={'estado': 'P'}
+        )
+    
     asistencias_hoy = Asistencia.objects.filter(fecha=hoy)
+
+    cursos = Curso.objects.all()
 
     total_alumnos = Estudiante.objects.count()
     total_ausentes = asistencias_hoy.filter(estado='F').count()

@@ -10,4 +10,5 @@ urlpatterns = [
     path('agregar-estudiante/', views.agregar_estudiante, name='agregar-estudiante'),
     path('agregar-profesor/', views.agregar_profesor, name='agregar-profesor'),
     path('agregar-administrador/', views.agregar_administrador, name='agregar-administrador'),
+    path('agregar_curso/', views.agregar_curso, name='agregar_curso'),
 ]

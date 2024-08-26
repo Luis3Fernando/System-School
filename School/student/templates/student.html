@@ -17,6 +17,7 @@
     <div class="header-main">
         <div>
             <p>{{fecha}}</p>
+            <p>Profesor: {{profesor}}</p>
             <h1>Buen dia Estudiante {{estudiante.idUsuario.nombre}}</h1>
         </div>
         <img src="{%static 'icon/vector-fondo.png'%}" alt="">
@@ -50,17 +51,18 @@
                 </div>
             </div>
             <div class="botones">
-                <button>
-                    <div>
-                        <img src="{% static "icon/lista-color.png" %}" alt="">
-                    </div>
-                    <p>Asistencia</p>
-                </button>
-                <button>
+                <button onclick="window.location.href='{% url 'notas_student' %}'">
                     <div>
                         <img src="{% static "icon/notas-color.png" %}" alt="">
                     </div>
                     <p>Notas</p>
+                </button> 
+
+                <button onclick="window.location.href='{% url 'enviarMensaje' %}'">
+                    <div>
+                        <img src="{% static "icon/notas-color.png" %}" alt="">
+                    </div>
+                    <p>Justificar Asistencia</p>
                 </button>
             </div>
         </div>

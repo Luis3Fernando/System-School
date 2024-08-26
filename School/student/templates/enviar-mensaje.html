@@ -1,0 +1,40 @@
+{% extends 'base-student.html' %}
+
+{% block title %}Estudiante{% endblock %}
+{% block extra_css %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/administrador/add-student.css' %}">
+{% endblock %}
+
+{% block home_active %}active{% endblock %}
+
+{% block home_icon %}
+<img src="{% static 'icon/home-selected.png' %}" alt="student">
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Envia un mensaje</h1>
+
+    <!-- Mostrar mensajes de error o éxito -->
+    {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+                <div class="message {{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="input-container">
+                <label for="mensaje">Mensaje</label>
+                <textarea id="mensaje" name="apellido" rows="6" cols="50" required></textarea>
+            </div>
+        </div>
+      
+        <button type="submit" name="enviar_mensaje">Enviar</button>
+    </form>
+</div>
+{% endblock %}

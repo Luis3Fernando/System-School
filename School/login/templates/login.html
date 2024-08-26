@@ -1,49 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles/login/login.css' %}" />
     <title>Escuela Primaria</title>
-  </head>
-  <body>
+</head>
+<body>
     <header class="site-header">
-      <div class="logo">
-        <img src={% static 'icon/gorro-de-graduacion.png' %} alt="icono">
-        <a href="#">I.E. San Francisco de Lucuchanga</a>
-      </div>
-
-      <div class="div_login">
-        <nav class="nav">
-          <ul>
-            <li><a href="#">Atención</a></li>
-            <li><a href="#">Servicios</a></li>
-            <li><a href="#">Programa</a></li>
-          </ul>
-        </nav>
-        <button onclick="window.location.href='{% url 'type-user' %}'">Login</button>
-      </div>
+        <div class="logo">
+            <img src="{% static 'icon/gorro-de-graduacion.png' %}" alt="icono">
+            <a href="#">I.E. San Francisco de Lucuchanga</a>
+        </div>
+        <div class="div_login">
+            <nav class="nav">
+                <ul>
+                    <li><a href="#about">Acerca de</a></li>
+                    <li><a href="#courses">Cursos</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </nav>
+            <button onclick="window.location.href='{% url 'type-user' %}'">Login</button>
+        </div>
     </header>
     <main class="site-main">
-      <div class="left">
-        <div>
-          <p>Educación es el pasaporte hacia el futuro</p>
-          <h1>Plataforma Educativa</h1>
-          <h2>para todos</h2>
-        </div>
-      </div>
+        <section id="cover">
+          <div class="left">
+            <div>
+              <p>Educación es el pasaporte hacia el futuro</p>
+              <h1>Plataforma Educativa</h1>
+              <h2>para todos</h2>
+            </div>
+          </div>
+    
+          <div class="right">
+            <img id="img1" src={% static 'img/estudiante1.jpg' %} alt="img1" /> 
+            <img id="img2" src={% static 'img/estudiante2.jpg' %} alt="img2" />
+            <div class="text-p">
+              <p>
+                Donde la tecnología y la educación se unen para facilitar el
+                seguimiento y la gestión de la asistencia de estudiantes y docentes.
+              </p>
+            </div>
+          </div>
+        </section>
 
-      <div class="right">
-        <img id="img1" src={% static 'img/estudiante1.jpg' %} alt="img1" /> 
-        <img id="img2" src={% static 'img/estudiante2.jpg' %} alt="img2" />
-        <div class="text-p">
-          <p>
-            Donde la tecnología y la educación se unen para facilitar el
-            seguimiento y la gestión de la asistencia de estudiantes y docentes.
-          </p>
-        </div>
-      </div>
+        <section id="about" class="section">
+          <div class="about-content">
+            <div class="about-text">
+              <h2>Acerca de Nosotros</h2>
+              <p>
+                Somos una institución educativa primaria comprometida con la formación integral de nuestros estudiantes. Nos enfocamos en brindar una educación de calidad que fomente el desarrollo de habilidades académicas, sociales y emocionales.
+              </p>
+            </div>
+            <div class="about-image">
+              <img src="{% static 'img/cover_college.jpg' %}" alt="Sobre nosotros">
+            </div>
+          </div>
+        </section>
+        
+      
+        
+        
+
+        <section id="courses" class="section">
+            <h2>Nuestros Cursos</h2>
+            <div class="card-container">
+              <div class="card">
+                  <div class="card-front">
+                    <img src="{%static 'icon/ciencia y ambiente.png'%}" alt="">
+                      <h3>Ciencia y Ambiente</h3>
+                  </div>
+                  <div class="card-back">
+                      <p>Fomentamos la curiosidad y el respeto por el medio ambiente.</p>
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-front">
+                    <img src="{%static 'icon/arte y cultura.png'%}" alt="">
+                      <h3>Arte y Cultura</h3>
+                  </div>
+                  <div class="card-back">
+                      <p>Desarrollamos la creatividad y apreciación de las diversas culturas.</p>
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-front">
+                    <img src="{%static 'icon/comunicación.png'%}" alt="">
+                      <h3>Comunicación</h3>
+                  </div>
+                  <div class="card-back">
+                      <p>Mejoramos las habilidades de expresión oral y escrita.</p>
+                  </div>
+              </div>
+              <div class="card">
+                  <div class="card-front">
+                    <img src="{%static 'icon/matemáticas.png'%}" alt="">
+                      <h3>Matemáticas</h3>
+                  </div>
+                  <div class="card-back">
+                      <p>Desarrollamos habilidades de cálculo y razonamiento lógico.</p>
+                  </div>
+              </div>
+          </div>
+          
+        </section>
+
+        <section id="contact" class="section">
+            <h2>Contacto</h2>
+            <p>Puedes contactarnos en: contacto@lucuchanga.edu.pe</p>
+        </section>
     </main>
-  </body>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        const track = document.querySelector('.carousel-track');
+        const slides = Array.from(track.children);
+        const nextButton = document.querySelector('.right-button');
+        const prevButton = document.querySelector('.left-button');
+    
+        const setSlidePosition = (slide, index) => {
+            slide.style.left = index * 100 + '%';
+        };
+        slides.forEach(setSlidePosition);
+    
+        const moveToSlide = (track, currentSlide, targetSlide) => {
+            track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
+            currentSlide.classList.remove('current-slide');
+            targetSlide.classList.add('current-slide');
+        };
+    
+        prevButton.addEventListener('click', () => {
+            const currentSlide = track.querySelector('.current-slide');
+            const prevSlide = currentSlide.previousElementSibling;
+    
+            if (prevSlide) {
+                moveToSlide(track, currentSlide, prevSlide);
+            }
+        });
+    
+        nextButton.addEventListener('click', () => {
+            const currentSlide = track.querySelector('.current-slide');
+            const nextSlide = currentSlide.nextElementSibling;
+    
+            if (nextSlide) {
+                moveToSlide(track, currentSlide, nextSlide);
+            }
+        });
+    });
+    
+    </script>
+</body>
 </html>

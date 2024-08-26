@@ -4,6 +4,7 @@ from .utils import fecha_actual, GetPerson
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, HttpResponse
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 @login_required
 def Administrador(request):
@@ -207,3 +208,17 @@ def agregar_administrador(request):
             return redirect('administrador') 
     else:
         return render(request, 'agregar_administrador.html')
+    
+    
+def agregar_curso(request):
+    if request.method == 'POST':
+        nombre = request.POST.get('apellido')
+        if nombre:
+            curso = Curso(nombre=nombre)
+            curso.save()
+            messages.success(request, 'Curso agregado exitosamente.')
+            return redirect('cursos') 
+        else:
+            messages.error(request, 'El nombre del curso es requerido.')
+
+    return render(request, 'agregar-curso.html')
