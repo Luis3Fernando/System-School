@@ -1,0 +1,53 @@
+.table-container {
+    overflow-y: auto;
+    padding: 10px;
+    margin: auto
+} 
+
+.title-course{
+    margin-left: 5%;
+}
+
+table {
+    width: 90%;
+    margin: auto;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+    color: #666;
+    font-weight: 400;
+}
+
+td {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+tr.course-row td {
+    border-bottom: 2px solid #ccc;
+    font-weight: bold;
+}
+
+.competence-row td {
+    border-bottom: 1px solid #eee;
+    color: #666;
+}
+
+.container-notas {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+button {
+    background-color: #00448D;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 10px;
+}

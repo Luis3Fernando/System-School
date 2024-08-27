@@ -1,0 +1,111 @@
+.header_students{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.header_students>div{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 35%;
+}
+
+.header_students>div> button{
+    background-color: #00448D;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    color: white;
+    cursor: pointer;
+}
+
+.busqueda{
+    background-color: white;
+    display: flex;
+    border-radius: 10px;
+    padding: 10px 15px;
+    width: 300px;
+    justify-content: space-between;
+}
+
+.busqueda img{
+    width: 25px;
+    height: 25px;
+}
+
+.busqueda input{
+    border: none;
+    outline: none;
+    margin-left: 10px;
+    color: gray;
+    text-align: right;
+    width: 80%;
+}
+
+.card{
+    display: flex;
+    flex-direction: row;
+    width: 350px;
+    height: 200px;
+    border-radius: 10px;
+    min-width: 200px;
+    min-height: 100px;
+    align-items:center;
+    justify-content: center;
+    border: solid 1px rgb(219, 219, 219);
+    background-color: white;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    transition: visibility 0.3s, opacity 0.3s;
+    opacity: 1;
+    visibility: visible;
+}
+
+.card.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.card> img{
+    width: 120px;
+    height: 90%;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-left: 20px;
+}
+
+.card > div{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.card>div>h1{
+    font-size: 18px;
+    color: #00448D;
+    margin-bottom: 10px;
+}
+.card >div>p{
+    margin: 7px 0;
+    font-size: 13px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 40px;
+    max-height: 80vh;
+    overflow-y: auto;
+}

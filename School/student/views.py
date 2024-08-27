@@ -13,16 +13,23 @@ from django.utils import timezone
 
 @login_required
 def Student(request):
+    hoy = timezone.now().date()
     try:
         usuario = Usuario.objects.get(dni=request.user)
         estudiante = Estudiante.objects.get(idUsuario=usuario)
         profesor = Profesore.objects.get(grado=estudiante.grado)
+    
     except Estudiante.DoesNotExist:
         return HttpResponseForbidden("No tienes permiso para ver esta página.")
+    
+    try:
+        asistencia = Asistencia.objects.get(idstudent=estudiante,fecha=hoy )
+    except:
+        asistencia =[]
     cursos = Curso.objects.all()
     total_cursos = cursos.count()
-    hoy = timezone.now().date()
-    asistencia = Asistencia.objects.get(idstudent=estudiante,fecha=hoy )
+    
+    
     context = {
         "estudiante": estudiante,
         "fecha": fecha_actual(),
@@ -144,6 +151,66 @@ def actualizar_estudiante(request, dni):
         }
         return render(request, 'actualizar_estudiante.html', context)
 
+def valor_a_calificacion(promedio):
+    """
+    Convierte un valor numérico promedio de vuelta a una calificación.
+    """
+    if promedio >= 18:
+        return 'AD'
+    elif promedio >= 14:
+        return 'A'
+    elif promedio >= 11:
+        return 'B'
+    else:
+        return 'C'
+
+def calificacion_a_valor(nota):
+    """
+    Convierte una calificación en una escala numérica.
+    """
+    valores = {
+        'C': 5,   # Promedio de 0 a 10
+        'B': 12,  # Promedio de 11 a 13
+        'A': 15.5,  # Promedio de 14 a 17
+        'AD': 19  # Promedio de 18 a 20
+    }
+    return valores.get(nota, 0)
+
+def calcular_promedio_curso(estudiante, nombre_curso):
+    """
+    Calcula el promedio de un curso específico para un estudiante
+    y lo convierte a una calificación (A, B, C, AD).
+    Si falta alguna nota para alguna competencia de ese curso, el promedio es None.
+    """
+    try:
+        curso = Curso.objects.get(nombre=nombre_curso)
+        competencias = Competencia.objects.filter(idCurso=curso)
+        
+        total_valor = 0
+        total_notas = 0
+        
+        bandera = False
+        print("llegamos antes del for")
+        for competencia in competencias:
+            nota = Nota.objects.filter(idStudent=estudiante, idCompetencia=competencia).first()
+            if nota is None:
+                # Si falta alguna nota, retornamos None
+                bandera = True
+                break
+            total_valor += calificacion_a_valor(nota.nota)
+            total_notas += 1
+        
+        print("total notas: ",total_notas)
+        if not bandera and total_notas!=0:
+            promedio_numerico = total_valor / total_notas
+            return valor_a_calificacion(promedio_numerico)
+        
+        else:
+            return None
+        
+    except Curso.DoesNotExist:
+        return None
+
 def generate_pdf(request):
     try:
         usuario = Usuario.objects.get(dni=request.user.username)
@@ -158,17 +225,29 @@ def generate_pdf(request):
     for i, nota in enumerate(notas):
         if i < 19:
             notas_array[i] = nota.nota
-            
+
+    # Calcular promedios para cada curso
+    promedio_comunicacion = calcular_promedio_curso(estudiante, "Comunicación")
+    promedio_matematicas = calcular_promedio_curso(estudiante, "Matemáticas")
+    promedio_religion = calcular_promedio_curso(estudiante, "Religión")
+    promedio_arte = calcular_promedio_curso(estudiante, "Arte y Cultura")
+    promedio_ciencia = calcular_promedio_curso(estudiante, "Ciencia y Ambiente")
+    promedio_personal = calcular_promedio_curso(estudiante, "Persona Social")
+
     context = {
         'profesor': profesor,
         'estudiante': estudiante,
-        'notas': notas_array
+        'notas': notas_array,
+        'promedio_comunicacion': promedio_comunicacion,
+        'promedio_matematicas': promedio_matematicas,
+        'promedio_religion': promedio_religion,
+        'promedio_arte': promedio_arte,
+        'promedio_ciencia': promedio_ciencia,
+        'promedio_personal': promedio_personal,
     }
 
-    ruta_template ='C:/Users/Luis Fernando/Documents/Unamba/Projects/System School/School/static/pdf/pdf_template.html'
-    
-    #ruta_css = os.path.join(settings.STATIC_ROOT, 'styles', 'pdf_styles.css')
-    ruta_css = ''
+    ruta_template = 'C:/Users/Luis Fernando/Documents/Unamba/Projects/System School/School/static/pdf/pdf_template.html'
+    ruta_css = ''  # Ruta del CSS si es necesario
 
     ruta_pdf = create_pdf(ruta_template, context, rutacss=ruta_css)
 
